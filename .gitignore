@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.env
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-freeze.txt
+*.egg
+dist/
+build/
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.tox/
+*.ipynb_checkpoints
+ipython_config.py
+instance/
+.webassets-cache/
+.hypothesis/
+
+# JavaScript
+node_modules/
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+package-lock.json
+# If you want to commit package-lock.json (recommended for applications), remove the line above.
+# For libraries, it's common to ignore it.
+.DS_Store
+.idea/
+.vscode/
+*.log
+coverage/
+dist/
+build/
+.nuxt/
+.next/
+.svelte-kit/
+*.tsbuildinfo
+
+# IDE & OS specific
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Secrets - ensure these are not committed if they exist
+credentials.*
+*.pem
+*.key
+secrets.yml
+secrets.json
+config.py # If it contains sensitive data
+
+# Other common files
+*.swp
+*~
+*.bak
+*.tmp
