@@ -49,6 +49,7 @@ Depois de instalar as dependências, você pode rodar o projeto. O comando exato
 Um comando comum para iniciar uma aplicação Python pode ser:
 
 ```bash
+uvicorn src.main:app --reload --host 0.0.0.0 --port 8090
 uvicorn src.main:app --reload --port 8090
 ```
 
