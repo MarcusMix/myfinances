@@ -1,10 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from pydantic import ValidationError
 
 from .. import models, database, auth
 
 # Lista para armazenar tokens inválidos (em produção, use um Redis ou banco de dados)
+# arrumar e saber explicar.
+# tratar error de melhor forma
+# FEITO: campo de confirmacaPreciso criar Validações dos meus CRUDs, [@limite_routes.py](@file:myfinance/backend/src/routes/limite_routes.py) @despesa_routes.
+
+# criar validacoes de todos os cruds
 blacklisted_tokens = set()
 
 router = APIRouter(
@@ -12,12 +18,15 @@ router = APIRouter(
     tags=["autenticação"]
 )
 
-@router.post("/usuario", response_model=models.Usuario)
+@router.post("/usuario", response_model=models.Usuario, responses={400: {"model": models.ErrorResponse}, 409: {"model": models.ErrorResponse}})
 def create_usuario(usuario: models.UsuarioCreate, db: Session = Depends(database.get_db)):
+    # A validação de senhas iguais já é feita no modelo Pydantic através do validator
+    # Se chegou aqui, é porque as senhas são iguais
+
     db_user = db.query(database.Usuario).filter(database.Usuario.email == usuario.email).first()
     if db_user:
         raise HTTPException(status_code=409, detail="Email já cadastrado")
-    
+
     hashed_password = auth.get_password_hash(usuario.senha)
     db_user = database.Usuario(
         email=usuario.email,
@@ -49,4 +58,8 @@ async def logout(token: str = Depends(auth.oauth2_scheme)):
     Adiciona o token atual à lista de tokens inválidos.
     """
     blacklisted_tokens.add(token)
-    return {"message": "Logout realizado com sucesso"} 
+    return {"message": "Logout realizado com sucesso"}
+
+@router.get("/me", response_model=models.Usuario)
+async def get_current_user(current_user: database.Usuario = Depends(auth.get_current_user)):
+    return current_user;

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field, validator
 from typing import Optional, List
 
 class UsuarioBase(BaseModel):
@@ -8,6 +8,13 @@ class UsuarioBase(BaseModel):
 
 class UsuarioCreate(UsuarioBase):
     senha: str
+    senha_confirmacao: str
+    
+    @validator('senha_confirmacao')
+    def senhas_coincidem(cls, v, values):
+        if 'senha' in values and v != values['senha']:
+            raise ValueError('As senhas não coincidem')
+        return v
 
 class Usuario(UsuarioBase):
     id: int
@@ -56,3 +63,6 @@ class Limite(LimiteBase):
 
 class Total(BaseModel):
     TOTAL: float 
+
+class ErrorResponse(BaseModel):
+    detail: str

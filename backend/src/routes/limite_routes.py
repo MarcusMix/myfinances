@@ -27,6 +27,16 @@ def create_limite(
     db: Session = Depends(database.get_db),
     current_user: database.Usuario = Depends(auth.get_current_user)
 ):
+    # Verifica se já existe um limite para o mesmo mês e ano para o usuário
+    existing_limite = db.query(database.Limite).filter(
+        database.Limite.usuario_id == current_user.id,
+        database.Limite.mes == limite.mes,
+        database.Limite.ano == limite.ano
+    ).first()
+
+    if existing_limite:
+        raise HTTPException(status_code=400, detail="Já existe um limite para este mês e ano.")
+
     db_limite = database.Limite(**limite.dict(), usuario_id=current_user.id)
     db.add(db_limite)
     db.commit()
