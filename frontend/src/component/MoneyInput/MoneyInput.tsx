@@ -1,5 +1,5 @@
-import {Text, View} from "react-native";
-import {styles} from "./AppMoneyInputStyle";
+import { Text, View } from "react-native";
+import { styles } from "./MoneyInputStyle";
 import CurrencyInput from 'react-native-currency-input';
 
 /*
@@ -9,19 +9,19 @@ import CurrencyInput from 'react-native-currency-input';
  * retorna o valor no tipo ``number`` sem formatação.
  */
 
-interface AppMoneyProps {
+interface MoneyInputProps {
   value?: number;
   onValueChange: any;
   editable?: boolean;
   label?: string;
 }
 
-export default function AppMoneyInput({
-                                        value,
-                                        onValueChange,
-                                        editable = true,
-                                        label
-                                      }: AppMoneyProps) {
+export default function MoneyInput({
+  value,
+  onValueChange,
+  editable = true,
+  label
+}: MoneyInputProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>

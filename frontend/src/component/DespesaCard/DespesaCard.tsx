@@ -1,12 +1,12 @@
-import {Text, View} from "react-native";
-import {styles} from "./AppDespesaCardStyle";
-import {formatarMoeda} from "../../services/utils";
+import { Text, View } from "react-native";
+import { styles } from "./DespesaCardStyle";
+import { formatarMoeda } from "../../services/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as React from "react";
-import AppEditarRemoverPressable from "../appEditarRemoverPressables/AppEditarRemoverPressable";
-import {getMesAtual, getAnoAtual, isMesAnoIgualOuPosteriorADataAtual} from "../../services/utils";
+import EditarRemoverPressable from "../EditarRemoverPressable/EditarRemoverPressable";
+import { getMesAtual, getAnoAtual, isMesAnoIgualOuPosteriorADataAtual } from "../../services/utils";
 
-interface AppinputProps {
+interface DespesaCardProps {
   descricao: string;
   valor: number;
   mes: number;
@@ -16,12 +16,12 @@ interface AppinputProps {
   icone: string;
 }
 
-export default function AppDespesaCard({descricao, valor, removeAction, editAction, icone, mes, ano}: AppinputProps) {
+export default function DespesaCard({ descricao, valor, removeAction, editAction, icone, mes, ano }: DespesaCardProps) {
 
   return (
     <View style={styles.container}>
       <View style={styles.rowConteudo}>
-        <Ionicons name={icone} size={40} color={"black"}/>
+        <Ionicons name={icone} size={40} color={"black"} />
         <View style={styles.columnDescricaoValor}>
           <Text style={styles.descricao}>
             {descricao}
@@ -33,7 +33,7 @@ export default function AppDespesaCard({descricao, valor, removeAction, editActi
       </View>
       {
         isMesAnoIgualOuPosteriorADataAtual(mes, ano) ?
-          <AppEditarRemoverPressable editAction={editAction} removeAction={removeAction}/>
+          <EditarRemoverPressable editAction={editAction} removeAction={removeAction} />
           : null
       }
 

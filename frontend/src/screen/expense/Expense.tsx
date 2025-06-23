@@ -1,18 +1,18 @@
 import { styles } from './ExpenseStyle';
 import { ScrollView, Text, View, ToastAndroid } from 'react-native';
-import AppTitle from "../../component/appTitle/AppTitle";
-import AppMoneyInput from "../../component/appMoneyInput/AppMoneyInput";
-import AppTextInput from "../../component/appTextInput/AppTextInput";
+import Title from "../../component/Title/Title";
+import MoneyInput from "../../component/MoneyInput/MoneyInput";
+import TextInput from "../../component/TextInput/TextInput";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { formatarMoedaSemDecimal, getAnoAtual, getMesAtual, ICONES, MESES } from "../../services/utils";
-import AppSelectMesAnoInput from "../../component/appSelectMesAnoInput/AppSelectMesAnoInput";
-import AppPressable from "../../component/appPressable/AppPressable";
-import AppDespesaCard from "../../component/appDespesaCard/AppDespesaCard";
-import AppIconeInput from "../../component/appIconeInput/AppIconeInput";
-import AppIconeModal from "../../component/appIconeModal/AppIconeModal";
+import SelectMesAnoInput from "../../component/SelectMesAnoInput/SelectMesAnoInput";
+import Pressable from "../../component/Pressable/Pressable";
+import DespesaCard from "../../component/DespesaCard/DespesaCard";
+import IconeInput from "../../component/IconeInput/IconeInput";
+import IconeModal from "../../component/IconeModal/IconeModal";
 import { getDespesasPorMes, removerDespesa, salvarDespesa } from "../../services/despesaService";
-import AppRemoverModal from "../../component/appRemoverModal/AppRemoverModal";
+import RemoverModal from "../../component/RemoverModal/RemoverModal";
 import { PieChart } from "react-native-gifted-charts";
 
 export default function Expense() {
@@ -194,14 +194,14 @@ export default function Expense() {
    */
   return (
     <ScrollView ref={scrollViewRef} style={styles.container}>
-      {/* <AppIconeModal
+      <IconeModal
         icone={[icone, setIcone]}
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         title={"Escolha um ícone"}
-        iconeLista={ICONES} /> */}
+        iconeLista={ICONES} />
 
-      <AppRemoverModal
+      <RemoverModal
         modalVisible={modalRemoverVisible}
         setModalVisible={setModalRemoverVisible}
         title={"Confirmar remoção"}
@@ -211,19 +211,19 @@ export default function Expense() {
 
       <View style={styles.subContainer}>
 
-        <AppTitle title={idDespesa === 0 ? "Cadastrar Despesa" : "Editar Despesa"} />
+        <Title title={idDespesa === 0 ? "Cadastrar Despesa" : "Editar Despesa"} />
 
         <View style={styles.rowIconeDescricao}>
-          {/* <View style={styles.colIcone}>
-            <AppIconeInput icone={icone} label={"Ícone"} onPress={() => setModalVisible(true)} />
-          </View> */}
+          <View style={styles.colIcone}>
+            <IconeInput icone={icone} label={"Ícone"} onPress={() => setModalVisible(true)} />
+          </View>
           <View style={styles.colDescricao}>
-            <AppTextInput text={descricao} label={"Descrição"} onValueChange={setDescricao} />
+            <TextInput text={descricao} label={"Descrição"} onValueChange={setDescricao} />
           </View>
         </View>
 
-        <AppMoneyInput value={valor} label={"Valor"} onValueChange={setValor} />
-        <AppSelectMesAnoInput
+        <MoneyInput value={valor} label={"Valor"} onValueChange={setValor} />
+        <SelectMesAnoInput
           label={"Período"}
           editable={true}
           mes={mesCadastro}
@@ -238,13 +238,13 @@ export default function Expense() {
         <View style={styles.botoesCadastrar}>
           {idDespesa !== 0 ?
             <View style={styles.botoesCadastrarUnidade}>
-              <AppPressable
+              <Pressable
                 text={"Cancelar"}
                 action={handleCancelar}
               />
             </View> : null}
           <View style={styles.botoesCadastrarUnidade}>
-            <AppPressable
+            <Pressable
               text={idDespesa === 0 ? "Cadastrar" : "Salvar edição"}
               action={handleSalvarDespesa}
             />
@@ -255,8 +255,8 @@ export default function Expense() {
 
 
       <View style={styles.subContainerHistorico}>
-        <AppTitle title={"Histórico"} />
-        <AppSelectMesAnoInput
+        <Title title={"Histórico"} />
+        <SelectMesAnoInput
           label={"Período"}
           editable={true}
           mes={mesConsulta}
@@ -298,9 +298,9 @@ export default function Expense() {
 
         {
           despesas.length === 0 ?
-            <AppTitle title={"Nenhuma despesa cadastrada"} /> :
+            <Title title={"Nenhuma despesa cadastrada"} /> :
             despesas.map((despesa, index) =>
-              <AppDespesaCard
+              <DespesaCard
                 key={index}
                 descricao={despesa.descricao}
                 valor={despesa.valor}

@@ -1,15 +1,15 @@
 import { styles } from './LimitStyle';
 import { ScrollView, Text, View, ToastAndroid } from 'react-native';
-import AppMoneyInput from "../../component/appMoneyInput/AppMoneyInput";
+import MoneyInput from "../../component/MoneyInput/MoneyInput";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import AppSelectMesAnoInput from "../../component/appSelectMesAnoInput/AppSelectMesAnoInput";
+import SelectMesAnoInput from "../../component/SelectMesAnoInput/SelectMesAnoInput";
 import { getAnoAtual, getMesAtual, MESES } from '../../services/utils'
-import AppTitle from "../../component/appTitle/AppTitle";
-import AppPressable from "../../component/appPressable/AppPressable";
-import AppLimiteCard from "../../component/appLimiteCard/AppLimiteCard";
+import Title from "../../component/Title/Title";
+import Pressable from "../../component/Pressable/Pressable";
+import LimiteCard from "../../component/LimiteCard/LimiteCard";
 import { getLimitesPorMes, removerLimite, salvarLimite } from "../../services/limiteService";
-import AppRemoverModal from "../../component/appRemoverModal/AppRemoverModal";
+import RemoverModal from "../../component/RemoverModal/RemoverModal";
 
 export default function Limit() {
 
@@ -145,20 +145,17 @@ export default function Limit() {
   return (
 
     <ScrollView style={styles.container}>
-
-      <AppRemoverModal
+      <RemoverModal
         modalVisible={modalRemoverVisible}
         setModalVisible={setModalRemoverVisible}
         title={"Confirmar remoção"}
         name={"Tem certeza que deseja remover o limite de '" + limiteRemocaoMesAno + "'?"}
         removerAction={handleRemoverLimite}
       />
-
-
       <View style={styles.subContainer}>
-        <AppTitle title={idLimite === 0 ? "Cadastrar Limite" : "Editar Limite"} />
-        <AppMoneyInput value={limiteCadastro} label={"Limite"} onValueChange={setLimiteCadastro} />
-        <AppSelectMesAnoInput
+        <Title title={idLimite === 0 ? "Cadastrar Limite" : "Editar Limite"} />
+        <MoneyInput value={limiteCadastro} label={"Limite"} onValueChange={setLimiteCadastro} />
+        <SelectMesAnoInput
           label={"Período"}
           editable={true}
           mes={mesCadastro}
@@ -173,13 +170,13 @@ export default function Limit() {
         <View style={styles.botoesCadastrar}>
           {idLimite !== 0 ?
             <View style={styles.botoesCadastrarUnidade}>
-              <AppPressable
+              <Pressable
                 text={"Cancelar"}
                 action={handleCancelar}
               />
             </View> : null}
           <View style={styles.botoesCadastrarUnidade}>
-            <AppPressable
+            <Pressable
               text={idLimite === 0 ? "Cadastrar" : "Salvar edição"}
               action={handleSalvarLimite}
             />
@@ -189,10 +186,10 @@ export default function Limit() {
       </View>
 
       <View style={styles.subContainerConsultar}>
-        <AppTitle title={"Consultar"} />
-        <AppSelectMesAnoInput label={"Período"} editable={true} mes={mesConsulta} mesLista={mesListaConsulta} onMesChange={setMesConsulta} ano={anoConsulta} anoLista={anoListaConsulta} onAnoChange={setAnoConsulta} />
-        {limiteConsulta == null ? <AppTitle title={"Sem limite cadastrado"} /> :
-          <AppLimiteCard
+        <Title title={"Consultar"} />
+        <SelectMesAnoInput label={"Período"} editable={true} mes={mesConsulta} mesLista={mesListaConsulta} onMesChange={setMesConsulta} ano={anoConsulta} anoLista={anoListaConsulta} onAnoChange={setAnoConsulta} />
+        {limiteConsulta == null ? <Title title={"Sem limite cadastrado"} /> :
+          <LimiteCard
             valor={limiteConsulta.valor}
             editAction={() => handleEditarLimite(limiteConsulta)}
             removeAction={() => handleModalDeRemocao(limiteConsulta)}

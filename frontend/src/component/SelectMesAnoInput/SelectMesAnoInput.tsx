@@ -1,7 +1,7 @@
-import {Text, View} from "react-native";
-import {styles} from "./AppSelectMesAnoInputStyle";
-import {Picker} from '@react-native-picker/picker';
-import {isMesAnoIgualOuPosteriorADataAtual} from "../../services/utils";
+import { Text, View } from "react-native";
+import { styles } from "./SelectMesAnoInputStyle";
+import { Picker } from '@react-native-picker/picker';
+import { isMesAnoIgualOuPosteriorADataAtual } from "../../services/utils";
 
 /*
 https://github.com/react-native-picker/picker
@@ -13,19 +13,19 @@ interface Month {
   value: number;
 }
 
-interface AppinputProps {
-  label: string;
+interface SelectMesAnoInputProps {
+  label?: string;
   editable: boolean;
   mes: string;
   mesLista: Month[];
-  onMesChange: (value: string) => void;
+  onMesChange: any;
   ano: string;
   anoLista: string[];
-  onAnoChange: (value: string) => void;
+  onAnoChange: any;
   bloquearDatasAnteriores?: boolean;
 }
 
-export default function AppSelectMesAnoInput({label, editable, mes, mesLista, onMesChange, ano, anoLista, onAnoChange, bloquearDatasAnteriores=false}: AppinputProps) {
+export default function SelectMesAnoInput({ label, editable, mes, mesLista, onMesChange, ano, anoLista, onAnoChange, bloquearDatasAnteriores = false }: SelectMesAnoInputProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>
@@ -41,8 +41,8 @@ export default function AppSelectMesAnoInput({label, editable, mes, mesLista, on
             enabled={editable}>
             {mesLista.map((item) => (
               bloquearDatasAnteriores && !isMesAnoIgualOuPosteriorADataAtual(item.value, parseInt(ano)) ?
-              <Picker.Item label={item.name} value={item.value.toString()} key={item.value} enabled={false} style={{color: "gray"}}/> :
-              <Picker.Item label={item.name} value={item.value.toString()} key={item.value}/>
+                <Picker.Item label={item.name} value={item.value.toString()} key={item.value} enabled={false} style={{ color: "gray" }} /> :
+                <Picker.Item label={item.name} value={item.value.toString()} key={item.value} />
             ))}
           </Picker>
         </View>
@@ -54,7 +54,7 @@ export default function AppSelectMesAnoInput({label, editable, mes, mesLista, on
             }
             enabled={editable}>
             {anoLista.map((item, index) => {
-              return <Picker.Item label={item} value={item} key={index}/>
+              return <Picker.Item label={item} value={item} key={index} />
             })}
           </Picker>
         </View>

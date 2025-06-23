@@ -1,9 +1,9 @@
 import { styles } from "./RegisterStyle";
 import { Text, View, Alert, TouchableOpacity } from "react-native";
-import AppTitle from "../../component/appTitle/AppTitle";
-import AppTextInput from "../../component/appTextInput/AppTextInput";
+import Title from "../../component/Title/Title";
+import TextInput from "../../component/TextInput/TextInput";
 import { useState } from "react";
-import AppPressable from "../../component/appPressable/AppPressable";
+import Pressable from "../../component/Pressable/Pressable";
 import { cadastrarUsuario } from "../../services/usuarioService";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -54,8 +54,8 @@ export default function Register({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <AppTitle title="Register" />
-      <AppTextInput
+      <Title title="Register" />
+      <TextInput
         label="Nome"
         placeholder="Digite seu nome"
         onValueChange={setNome}
@@ -79,22 +79,22 @@ export default function Register({ navigation }) {
           }}
         />
       )}
-      <AppTextInput
+      <TextInput
         label="Email"
         placeholder="Digite seu email"
         onValueChange={setEmail}
       />
-      <AppTextInput
+      <TextInput
         label="Senha"
         placeholder="Digite sua senha"
         onValueChange={setSenha}
       />
-      <AppTextInput
+      <TextInput
         label="Confirmar Senha"
         placeholder="Confirme sua senha"
         onValueChange={setConfirmSenha}
       />
-      <AppPressable text="Entrar" action={handleRegister} />
+      <Pressable text="Entrar" action={handleRegister} />
       <Text style={styles.register} onPress={() => navigation.navigate("Login")}>Voltar ao Login</Text>
     </View>
   );

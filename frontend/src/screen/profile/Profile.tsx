@@ -1,12 +1,12 @@
 import App from '../../../App';
 import { styles } from './ProfileStyle';
 import { Button, Text, View } from 'react-native';
-import AppTitle from '../../component/appTitle/AppTitle';
+import Title from '../../component/Title/Title';
 import { useEffect, useState } from "react";
 import { getUsuarioLogado } from "../../services/usuarioService";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AppPressable from "../../component/appPressable/AppPressable";
+import Pressable from "../../component/Pressable/Pressable";
 
 export default function Profile({ navigation }) {
   const [usuario, setUsuario] = useState({
@@ -41,7 +41,7 @@ export default function Profile({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <AppTitle text="Meus Dados" />
+      <Title text="Meus Dados" />
 
       <View>
         <Text style={styles.label}>Nome</Text>
@@ -54,7 +54,7 @@ export default function Profile({ navigation }) {
         <Text style={styles.value}>{usuario.dt_nascimento}</Text>
       </View>
 
-      <AppPressable text={"Sair"} action={logout} />
+      <Pressable text={"Sair"} action={logout} />
     </View>
   )
 }

@@ -1,9 +1,9 @@
 import { styles } from "./LoginStyle";
 import { Alert, Text, View } from "react-native";
-import AppTextInput from "../../component/appTextInput/AppTextInput";
+import TextInput from "../../component/TextInput/TextInput";
 import React, { useState } from "react";
-import AppTitle from "../../component/appTitle/AppTitle";
-import AppPressable from "../../component/appPressable/AppPressable";
+import Title from "../../component/Title/Title";
+import Pressable from "../../component/Pressable/Pressable";
 import { loginUsuario, postUsuarioAsyncStorage } from "../../services/usuarioService";
 
 
@@ -71,19 +71,23 @@ export default function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <AppTitle title="Login" />
-      <AppTextInput
+      <Title title="Login" />
+      <TextInput
         label="Email"
         placeholder="Digite seu email"
         onValueChange={handleChangeEmail}
       />
-      <AppTextInput
+      <TextInput
         label="Senha"
         placeholder="Digite sua senha"
         onValueChange={handleChangeSenha}
       />
-      <AppPressable text="Entrar" action={handleLogin} />
+
+      <Pressable text="Entrar" action={handleLogin} />
+
       <Text style={styles.register} onPress={register}>Cadastre-se</Text>
     </View>
+
+
   );
 }

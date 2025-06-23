@@ -11,11 +11,11 @@ import { getDespesasPorMes, getTotalMes } from "../../services/despesaService";
 import { getLimiteValorPorMes } from "../../services/limiteService";
 import { colors } from "../../theme/colors";
 import { HomeStyle } from "./HomeStyle";
-import AppTitle from "../../component/appTitle/AppTitle";
-import AppPressable from "../../component/appPressable/AppPressable";
+import Title from "../../component/Title/Title";
+import Pressable from "../../component/Pressable/Pressable";
 import { useAuth } from "../../context/AuthContext";
 import { getAnoAtual, getMesAtual, MESES } from "../../services/utils";
-import AppSelectMesAnoInput from "../../component/appSelectMesAnoInput/AppSelectMesAnoInput";
+import SelectMesAnoInput from "../../component/SelectMesAnoInput/SelectMesAnoInput";
 import { getUsuarioLogado } from "../../services/usuarioService";
 
 export default function Home() {
@@ -104,7 +104,7 @@ export default function Home() {
   if (loading) {
     return (
       <View style={HomeStyle.container}>
-        <AppTitle title="Carregando..." />
+        <Title title="Carregando..." />
       </View>
     );
   }
@@ -134,11 +134,11 @@ export default function Home() {
         />
       }
     >
-      <AppTitle title={`Olá, ${usuario.nome} 👋`} />
+      <Title title={`Olá, ${usuario.nome} 👋`} />
       <Text style={HomeStyle.subtitle}>É bom te ver por aqui!</Text>
 
       <View style={HomeStyle.selectContainer}>
-        <AppSelectMesAnoInput
+        <SelectMesAnoInput
           label={"Selecione um período"}
           editable={true}
           mes={mesConsulta}
