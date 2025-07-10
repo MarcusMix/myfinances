@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface User {
@@ -11,6 +11,7 @@ interface AuthContextData {
     user: User | null;
     signIn: (user: User) => Promise<void>;
     signOut: () => Promise<void>;
+    loadingAuth: boolean;
 }
 
 interface AuthProviderProps {
@@ -21,6 +22,26 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<User | null>(null);
+
+    const [loadingAuth, setLoadingAuth] = useState(true); // Começa como "carregando"
+
+    // valida se tem token existente
+    useEffect(() => {
+        async function loadStoredUser() {
+            try {
+                const storedUser = await AsyncStorage.getItem('user'); 
+                if (storedUser) {
+                    setUser(JSON.parse(storedUser));
+                }
+            } catch (error) {
+                console.error("Erro ao carregar usuário salvo:", error);
+            } finally {
+                setLoadingAuth(false); 
+            }
+        }
+        loadStoredUser(); 
+    }, []);
+
 
     const signIn = async (userData: User) => {
         setUser(userData);
@@ -33,7 +54,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, signIn, signOut }}>
+        <AuthContext.Provider value={{ user, signIn, signOut, loadingAuth }}>
             {children}
         </AuthContext.Provider>
     );
