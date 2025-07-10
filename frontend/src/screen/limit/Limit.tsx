@@ -21,11 +21,6 @@ import {
 import RemoverModal from "../../component/RemoverModal/RemoverModal";
 
 export default function Limit() {
-  /*
-   * ------------------------------------------------------------------
-   * variáveis useState()
-   * ------------------------------------------------------------------
-   */
   const [limiteConsulta, setLimiteConsulta] = useState(null);
   const [erro, setErro] = useState("");
 
@@ -45,12 +40,6 @@ export default function Limit() {
   const mesListaConsulta = MESES;
   const anoListaConsulta = ["2025", "2026"];
 
-  /*
-   * ------------------------------------------------------------------
-   * funções da página
-   * montar a página, rolar, etc
-   * ------------------------------------------------------------------
-   */
   const mountPage = async () => {
     try {
       const limite = await getLimitesPorMes(
@@ -69,12 +58,6 @@ export default function Limit() {
     mountPage();
   }, [mesConsulta, anoConsulta]);
 
-  /*
-   * ------------------------------------------------------------------
-   * funções auxiliares
-   * montar objetos, modificar funções de estado, etc
-   * ------------------------------------------------------------------
-   */
   function incorporarLimiteObjeto(limiteObjeto) {
     if (limiteObjeto == null) {
       setIdLimite(0);
@@ -106,12 +89,6 @@ export default function Limit() {
     ToastAndroid.show("Operação cancelada", ToastAndroid.SHORT);
   }
 
-  /*
-   * ------------------------------------------------------------------
-   * funções de CRUD
-   * salvar, remover, editar, etc
-   * ------------------------------------------------------------------
-   */
   const handleModalDeRemocao = (limiteObjeto) => {
     setLimiteRemocaoId(limiteObjeto.id);
     setLimiteRemocaoMesAno(limiteObjeto.mes + "/" + limiteObjeto.ano);
@@ -188,7 +165,6 @@ export default function Limit() {
 
       const resultado = await salvarLimite(limiteObjeto);
 
-      // Mostrar mensagem apropriada baseada na operação (criação ou atualização)
       const mesNome = MESES.find((m) => m.value === limiteObjeto.mes)?.name;
       const mensagem =
         limiteObjeto.id === 0
@@ -204,11 +180,6 @@ export default function Limit() {
     }
   };
 
-  /*
-   * ------------------------------------------------------------------
-   * View
-   * ------------------------------------------------------------------
-   */
   return (
     <ScrollView style={styles.container}>
       <RemoverModal

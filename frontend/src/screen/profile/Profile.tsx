@@ -4,8 +4,6 @@ import { Button, Text, View } from "react-native";
 import Title from "../../component/Title/Title";
 import { useEffect, useState } from "react";
 import { getUsuarioLogado, logoutUsuario } from "../../services/usuarioService";
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Pressable from "../../component/Pressable/Pressable";
 import { useAuth } from "../../context/AuthContext";
 import { formatarData } from "../../services/utils";

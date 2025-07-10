@@ -11,14 +11,10 @@ import {
   getMesAtual,
   MESES,
 } from "../../services/utils";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import CategoryPicker from "../../component/CategoryPicker/CategoryPicker";
 import SelectMesAnoInput from "../../component/SelectMesAnoInput/SelectMesAnoInput";
 import Pressable from "../../component/Pressable/Pressable";
 import DespesaCard from "../../component/DespesaCard/DespesaCard";
 import { Picker } from "@react-native-picker/picker";
-import IconeInput from "../../component/IconeInput/IconeInput";
-import IconeModal from "../../component/IconeModal/IconeModal";
 import {
   getDespesasPorMes,
   removerDespesa,
@@ -28,11 +24,6 @@ import RemoverModal from "../../component/RemoverModal/RemoverModal";
 import { PieChart } from "react-native-gifted-charts";
 
 export default function Expense() {
-  /*
-   * ------------------------------------------------------------------
-   * variáveis useState()
-   * ------------------------------------------------------------------
-   */
   const [despesas, setDespesas] = useState([]);
   const [despesasGrafico, setDespesasGrafico] = useState([]);
 
@@ -82,12 +73,6 @@ export default function Expense() {
   const mesListaConsulta = MESES;
   const anoListaConsulta = ["2025", "2026"];
 
-  /*
-   * ------------------------------------------------------------------
-   * funções da página
-   * montar a página, rolar, etc
-   * ------------------------------------------------------------------
-   */
   const mountPage = async () => {
     try {
       const despesas = await getDespesasPorMes(
@@ -116,12 +101,6 @@ export default function Expense() {
     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
   };
 
-  /*
-   * ------------------------------------------------------------------
-   * funções auxiliares
-   * montar objetos, modificar funções de estado, etc
-   * ------------------------------------------------------------------
-   */
   function incorporarDespesaObjeto(despesaObjeto) {
     if (despesaObjeto === null) {
       setIdDespesa(0);
@@ -212,12 +191,6 @@ export default function Expense() {
     setDespesasGrafico(dados);
   }
 
-  /*
-   * ------------------------------------------------------------------
-   * funções de CRUD
-   * salvar, remover, editar, etc
-   * ------------------------------------------------------------------
-   */
   const handleModalDeRemocao = (despesaObjeto) => {
     setDespesaRemocaoId(despesaObjeto.id);
     setDespesaRemocaoDescricao(despesaObjeto.descricao);
@@ -253,11 +226,6 @@ export default function Expense() {
     }
   };
 
-  /*
-   * ------------------------------------------------------------------
-   * View
-   * ------------------------------------------------------------------
-   */
   return (
     <ScrollView ref={scrollViewRef} style={styles.container}>
       <RemoverModal
