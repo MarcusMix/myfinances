@@ -1,12 +1,11 @@
 import { Modal, Text, View } from "react-native";
 import * as React from "react";
 import { styles } from "./RemoverModalStyle";
-import Pressable from "../Pressable/Pressable";
+import ModalButtons from "../ModalButtons/ModalButtons";
 
 /*
 https://reactnative.dev/docs/modal
  */
-
 
 interface RemoverModalProps {
   modalVisible: boolean;
@@ -16,9 +15,13 @@ interface RemoverModalProps {
   name: string;
 }
 
-export default function RemoverModal({ modalVisible, setModalVisible, title, name, removerAction }: RemoverModalProps) {
-
-
+export default function RemoverModal({
+  modalVisible,
+  setModalVisible,
+  title,
+  name,
+  removerAction,
+}: RemoverModalProps) {
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -27,26 +30,19 @@ export default function RemoverModal({ modalVisible, setModalVisible, title, nam
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-        }}>
+        }}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>{title}</Text>
             <Text style={styles.modalSubText}>{name}</Text>
 
-            <View style={styles.botoes}>
-              <View style={styles.botao}>
-                <Pressable
-                  text={"Cancelar"}
-                  action={() => setModalVisible(!modalVisible)}
-                />
-              </View>
-              <View style={styles.botao}>
-                <Pressable
-                  text={"Confirmar"}
-                  action={removerAction} />
-              </View>
-            </View>
-
+            <ModalButtons
+              onCancel={() => setModalVisible(!modalVisible)}
+              onConfirm={removerAction}
+              cancelText="Cancelar"
+              confirmText="Confirmar"
+            />
           </View>
         </View>
       </Modal>

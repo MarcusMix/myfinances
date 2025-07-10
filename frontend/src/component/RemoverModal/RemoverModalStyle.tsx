@@ -1,39 +1,52 @@
-import {StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
+import { colors } from "../../theme/colors";
 
 export const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalView: {
-    height: 250,
-    width: "60%",
+    minHeight: 200,
+    width: "80%",
     margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 16,
-    shadowColor: '#000',
+    backgroundColor: colors.background,
+    borderRadius: 16,
+    padding: 24,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    alignItems: "center",
+    justifyContent: "space-between",
   },
-  title: {
-    textAlign: 'center',
+  modalText: {
+    textAlign: "center",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    color: colors.text,
+    marginBottom: 12,
   },
-  rowBotoes: {
-    flexDirection: 'row',
-    gap: 8,
-  }
-
-
+  modalSubText: {
+    textAlign: "center",
+    fontSize: 16,
+    color: colors.textSecondary,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
+  botoes: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  botao: {
+    flex: 1,
+  },
 });

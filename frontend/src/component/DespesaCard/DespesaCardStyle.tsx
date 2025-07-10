@@ -7,9 +7,9 @@ export const styles = StyleSheet.create({
     color: "#333",
   },
   valor: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
-    color: "#2E7D32",
+    color: "#000",
     marginBottom: 8,
     textAlign: "right",
   },

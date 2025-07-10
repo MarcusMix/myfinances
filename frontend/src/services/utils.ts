@@ -42,3 +42,17 @@ export function isMesAnoIgualOuPosteriorADataAtual(mes: number, ano: number) {
   const dataDespesa = new Date(ano, mes);
   return dataDespesa >= dataAtual;
 }
+
+export function formatarData(data: string | Date) {
+  if (!data) return "";
+
+  const dataObj = data instanceof Date ? data : new Date(data);
+
+  if (isNaN(dataObj.getTime())) return "";
+
+  const dia = dataObj.getDate().toString().padStart(2, "0");
+  const mes = (dataObj.getMonth() + 1).toString().padStart(2, "0");
+  const ano = dataObj.getFullYear();
+
+  return `${dia}/${mes}/${ano}`;
+}

@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Pressable from "../../component/Pressable/Pressable";
 import { useAuth } from "../../context/AuthContext";
+import { formatarData } from "../../services/utils";
 
 export default function Profile({ navigation }) {
   const [usuario, setUsuario] = useState({
@@ -43,7 +44,7 @@ export default function Profile({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Title text="Meus Dados" />
+      <Title title="Meus Dados" />
 
       <View>
         <Text style={styles.label}>Nome</Text>
@@ -53,7 +54,9 @@ export default function Profile({ navigation }) {
         <Text style={styles.value}>{usuario?.email || ""}</Text>
 
         <Text style={styles.label}>Data de Nascimento</Text>
-        <Text style={styles.value}>{usuario?.dt_nascimento || ""}</Text>
+        <Text style={styles.value}>
+          {formatarData(usuario?.dt_nascimento) || ""}
+        </Text>
       </View>
 
       <Pressable text={"Sair"} action={logout} />
