@@ -1,0 +1,30 @@
+
+*.venv
+venv/
+# Ignorar virtualenv
+.venv/
+venv/
+ENV/
+env/
+
+# Bytecode Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# SQLite DB
+*.db
+
+# Arquivos temporários
+*.log
+*.swp
+*.tmp
+*.bak
+.DS_Store
+*.sqlite3
+
+# Frontend
+node_modules/
+dist/
+build/
+
