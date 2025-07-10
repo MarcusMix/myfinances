@@ -9,7 +9,7 @@ class UsuarioBase(BaseModel):
 class UsuarioCreate(UsuarioBase):
     senha: str
     senha_confirmacao: str
-    
+
     @validator('senha_confirmacao')
     def senhas_coincidem(cls, v, values):
         if 'senha' in values and v != values['senha']:
@@ -34,7 +34,7 @@ class DespesaBase(BaseModel):
     valor: float
     mes: int
     ano: int
-    icone: str
+    categoria: str
 
 class DespesaCreate(DespesaBase):
     pass
@@ -62,7 +62,7 @@ class Limite(LimiteBase):
         from_attributes = True
 
 class Total(BaseModel):
-    TOTAL: float 
+    TOTAL: float
 
 class ErrorResponse(BaseModel):
     detail: str

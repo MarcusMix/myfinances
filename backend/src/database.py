@@ -31,7 +31,7 @@ class Despesa(Base):
     valor = Column(Float)
     mes = Column(Integer)
     ano = Column(Integer)
-    icone = Column(String)
+    categoria = Column(String)
     usuario_id = Column(Integer, ForeignKey("usuarios.id"))
     usuario = relationship("Usuario", back_populates="despesas")
 
@@ -54,4 +54,4 @@ def get_db():
     try:
         yield db
     finally:
-        db.close() 
+        db.close()

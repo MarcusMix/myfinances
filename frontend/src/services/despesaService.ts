@@ -7,12 +7,12 @@ export const getDespesasPorMes = async (mes: number, ano: number) => {
     const response = await axios.get(`${url}/despesas`, {
       params: {
         mes: mes,
-        ano: ano
-      }
+        ano: ano,
+      },
     });
     return response.data;
   } catch (error) {
-    console.log('Erro ao buscar despesas:', error);
+    console.log("Erro ao buscar despesas:", error);
     throw error;
   }
 };
@@ -22,22 +22,34 @@ export const getTotalMes = async (mes: number, ano: number) => {
     const response = await axios.get(`${url}/total`, {
       params: {
         mes: mes,
-        ano: ano
-      }
+        ano: ano,
+      },
     });
     return response.data.TOTAL;
   } catch (error) {
-    console.log('Erro ao buscar total:', error);
+    console.log("Erro ao buscar total:", error);
     throw error;
   }
 };
 
 export const salvarDespesa = async (despesa) => {
   try {
-    const response = await axios.post(`${url}/despesas`, despesa);
+    // Validate despesa object before sending to API
+    validarDespesa(despesa);
+
+    let response;
+    if (despesa.id) {
+      // Se a despesa já tem um ID, é uma atualização
+      response = await axios.put(`${url}/despesas/${despesa.id}`, despesa);
+      console.log("Atualizando despesa existente:", despesa.id);
+    } else {
+      // Se não tem ID, é uma nova criação
+      response = await axios.post(`${url}/despesas`, despesa);
+      console.log("Criando nova despesa");
+    }
     return response.data;
   } catch (error) {
-    console.log('Erro ao salvar despesa:', error);
+    console.log("Erro ao salvar despesa:", error);
     throw error;
   }
 };
@@ -46,37 +58,40 @@ export const removerDespesa = async (id: number) => {
   try {
     await axios.delete(`${url}/despesas/${id}`);
   } catch (error) {
-    console.log('Erro ao remover despesa:', error);
+    console.log("Erro ao remover despesa:", error);
     throw error;
   }
 };
 
 export const validarDespesa = (despesa) => {
   if (!despesa.descricao) {
-    throw new Error("Descrição é obrigatória")
+    throw new Error("Descrição é obrigatória");
   }
 
   if (!despesa.valor) {
-    throw new Error("Valor é obrigatório")
+    throw new Error("Valor é obrigatório");
   }
 
   if (despesa.valor <= 0) {
-    throw new Error("Valor deve ser maior que zero")
+    throw new Error("Valor deve ser maior que zero");
+  }
+
+  if (!despesa.categoria) {
+    throw new Error("Categoria é obrigatória");
   }
 
   if (!despesa.mes) {
-    throw new Error("Mês é obrigatório")
+    throw new Error("Mês é obrigatório");
   }
   if (despesa.mes < 1 || despesa.mes > 12) {
-    throw new Error("Mês inválido")
+    throw new Error("Mês inválido");
   }
 
   if (!despesa.ano) {
-    throw new Error("Ano é obrigatório")
+    throw new Error("Ano é obrigatório");
   }
 
   if (!isMesAnoIgualOuPosteriorADataAtual(despesa.mes, despesa.ano)) {
-    throw new Error("Mês e ano devem ser iguais ou posteriores a data atual")
+    throw new Error("Mês e ano devem ser iguais ou posteriores a data atual");
   }
-
-}
+};

@@ -14,7 +14,7 @@ CREATE TABLE despesas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     descricao VARCHAR(255) NOT NULL,
     valor DECIMAL(10, 2) NOT NULL,
-    icone VARCHAR(255) NOT NULL,
+    categoria VARCHAR(255) NOT NULL,
     mes INT NOT NULL,
     ano INT NOT NULL,
     usuario_id INT NOT NULL,

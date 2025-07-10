@@ -28,3 +28,17 @@ node_modules/
 dist/
 build/
 
+__pycache__/
+*.py[cod]
+# Python
+__pycache__/
+*.py[cod]
+
+# SQLite
+*.db
+
+# React/Node
+node_modules/
+dist/
+build/
+

@@ -11,38 +11,6 @@ import Login from "../screen/login/Login";
 import Register from "../screen/register/Register";
 import { useAuth } from "../context/AuthContext";
 
-// const Tab = createBottomTabNavigator();
-//
-// export default function Layout() {
-//   return (
-//     <NavigationContainer >
-//       <Tab.Navigator screenOptions={({ route }) => ({
-//         tabBarIcon: ({ focused, color, size }) => {
-//           let localIcon;
-//           if (route.name === 'Meta') {
-//             localIcon = focused ? 'cash' : 'cash-outline';
-//           } else if (route.name === 'Perfil') {
-//             localIcon = focused ? 'person' : 'person-outline';
-//           } else if (route.name === 'Limites') {
-//             localIcon = focused ? 'wallet' : 'wallet-outline';
-//           } else if (route.name === 'Despesas') {
-//             localIcon = focused ? 'receipt' : 'receipt-outline';
-//           }
-//           return <Ionicons name={localIcon} size={size} color={color} />;
-//         },
-//         tabBarStyle: { paddingBottom: 20, paddingTop: 8, height: 80},
-//
-//       })}>
-//         <Tab.Screen name="Perfil" component={Profile} />
-//         <Tab.Screen name="Meta" component={Home} />
-//         <Tab.Screen name="Despesas" component={Expense} />
-//         <Tab.Screen name="Limites" component={Limit} />
-//       </Tab.Navigator>
-//     </NavigationContainer>
-//   );
-// }
-
-// COM LOGIN E REGISTER
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   RefreshControl,
+  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getDespesasPorMes, getTotalMes } from "../../services/despesaService";
@@ -17,10 +18,11 @@ import { useAuth } from "../../context/AuthContext";
 import { getAnoAtual, getMesAtual, MESES } from "../../services/utils";
 import SelectMesAnoInput from "../../component/SelectMesAnoInput/SelectMesAnoInput";
 import { getUsuarioLogado } from "../../services/usuarioService";
+import SpendingDetailsModal from "../../component/SpendingDetailsModal/SpendingDetailsModal";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Home() {
   const navigation = useNavigation<any>();
-  const { user } = useAuth();
   const [despesas, setDespesas] = useState([]);
   const [total, setTotal] = useState(0);
   const [limite, setLimite] = useState(0);
@@ -29,7 +31,7 @@ export default function Home() {
   const [mesConsulta, setMesConsulta] = useState(getMesAtual().toString());
   const [anoConsulta, setAnoConsulta] = useState(getAnoAtual().toString());
   const mesListaConsulta = MESES;
-  const anoListaConsulta = ["2021", "2022", "2023", "2024", "2025"];
+  const anoListaConsulta = ["2025", "2026"];
   const [progresso, setProgresso] = useState(0);
   const [meta, setMeta] = useState(0);
   const [usuario, setUsuario] = useState({
@@ -37,30 +39,8 @@ export default function Home() {
     email: "",
     dt_nascimento: "",
   });
-
-  const carregarDados = async () => {
-    try {
-      setLoading(true);
-      const dataAtual = new Date();
-      const mes = dataAtual.getMonth() + 1;
-      const ano = dataAtual.getFullYear();
-
-      const [despesasData, totalData, limiteData] = await Promise.all([
-        getDespesasPorMes(mes, ano),
-        getTotalMes(mes, ano),
-        getLimiteValorPorMes(mes, ano),
-      ]);
-
-      setDespesas(despesasData);
-      setTotal(totalData || 0);
-      setLimite(limiteData || 0);
-    } catch (error) {
-      console.log("Erro ao carregar dados:", error);
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  };
+  const [modalVisible, setModalVisible] = useState(false);
+  const [categorySpendings, setCategorySpendings] = useState([]);
 
   const mountPage = async () => {
     try {
@@ -73,9 +53,19 @@ export default function Home() {
         Number(mesConsulta),
         Number(anoConsulta),
       );
+      const despesasData = await getDespesasPorMes(
+        Number(mesConsulta),
+        Number(anoConsulta),
+      );
       const usuario_logado = await getUsuarioLogado();
+
       setMeta(response_limite || 0);
       setProgresso(response_total || 0);
+      setDespesas(despesasData || []);
+
+      // Process category data
+      processCategoryData(despesasData);
+
       if (usuario_logado) {
         setUsuario(usuario_logado);
       }
@@ -86,10 +76,78 @@ export default function Home() {
     }
   };
 
+  const processCategoryData = (despesasData) => {
+    // Categorias com seus ícones e cores
+    const categoryIcons = {
+      casa: { icon: "home-outline", color: "#FF6B6B", name: "Casa" },
+      mercado: { icon: "cart-outline", color: "#4ECDC4", name: "Mercado" },
+      lazer: {
+        icon: "game-controller-outline",
+        color: "#45B7D1",
+        name: "Lazer",
+      },
+      transporte: { icon: "car-outline", color: "#96CEB4", name: "Transporte" },
+      saude: { icon: "medical-outline", color: "#FFEAA7", name: "Saúde" },
+      educacao: { icon: "school-outline", color: "#DDA0DD", name: "Educação" },
+      restaurantes: {
+        icon: "restaurant-outline",
+        color: "#98D8C8",
+        name: "Restaurantes",
+      },
+      vestuario: { icon: "shirt-outline", color: "#F7DC6F", name: "Vestuário" },
+      utilidades: {
+        icon: "bulb-outline",
+        color: "#BB8FCE",
+        name: "Utilidades",
+      },
+      viagem: { icon: "airplane-outline", color: "#85C1E9", name: "Viagem" },
+      seguros: {
+        icon: "shield-checkmark-outline",
+        color: "#FF9999",
+        name: "Seguros",
+      },
+      presentes: { icon: "gift-outline", color: "#FFCC99", name: "Presentes" },
+      tecnologia: {
+        icon: "hardware-chip-outline",
+        color: "#99FF99",
+        name: "Tecnologia",
+      },
+      cuidados_pessoais: {
+        icon: "heart-outline",
+        color: "#9999FF",
+        name: "Cuidados Pessoais",
+      },
+      diversos: { icon: "list-outline", color: "#CC99FF", name: "Diversos" },
+    };
+
+    // Agrupar despesas por categoria
+    const categorySummary = {};
+
+    despesasData.forEach((despesa) => {
+      const categoria = despesa.categoria || "diversos";
+      if (!categorySummary[categoria]) {
+        categorySummary[categoria] = {
+          amount: 0,
+          category: categoria,
+          categoryName: categoryIcons[categoria]?.name || categoria,
+          icon: categoryIcons[categoria]?.icon || "list-outline",
+          color: categoryIcons[categoria]?.color || "#999999",
+        };
+      }
+      categorySummary[categoria].amount += despesa.valor;
+    });
+
+    // Converter para array e ordenar por valor
+    const categoryArray = Object.values(categorySummary);
+    categoryArray.sort((a, b) => b.amount - a.amount);
+
+    setCategorySpendings(categoryArray);
+  };
+
   useEffect(() => {
     mountPage();
 
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       mountPage();
     });
 
@@ -157,22 +215,59 @@ export default function Home() {
         </View>
       </View>
 
-      <View style={HomeStyle.progressSection}>
-        <Text style={HomeStyle.progressoText}>Progresso</Text>
+      <TouchableOpacity
+        style={HomeStyle.progressSection}
+        onPress={() => setModalVisible(true)}
+        activeOpacity={0.7}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={HomeStyle.progressoText}>Progresso</Text>
+          <Ionicons
+            name="information-circle-outline"
+            size={18}
+            color="#666"
+            style={{ marginLeft: 5 }}
+          />
+        </View>
         <Text style={HomeStyle.metaText}>
           R$ {progresso.toFixed(2)}/R$ {meta.toFixed(2)}
         </Text>
-      </View>
+      </TouchableOpacity>
 
-      <View style={HomeStyle.progressBarContainer}>
+      <TouchableOpacity
+        style={HomeStyle.progressBarContainer}
+        onPress={() => setModalVisible(true)}
+        activeOpacity={0.7}
+      >
         <View
           style={[
             HomeStyle.progressBar,
-            { width: `${(progresso / meta) * 100}%` },
+            {
+              width:
+                meta > 0 ? `${Math.min((progresso / meta) * 100, 100)}%` : "0%",
+              backgroundColor: progresso > meta ? "#ff6b6b" : "#66bb6a",
+            },
           ]}
-        ></View>
-      </View>
+        />
+        <Text
+          style={{
+            fontSize: 12,
+            color: "#666",
+            textAlign: "center",
+            marginTop: 5,
+          }}
+        >
+          Toque para ver detalhes
+        </Text>
+      </TouchableOpacity>
+
+      <SpendingDetailsModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        totalSpent={progresso}
+        limit={meta}
+        categorySpending={categorySpendings}
+      />
     </ScrollView>
   );
 }
-

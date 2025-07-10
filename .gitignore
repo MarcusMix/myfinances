@@ -95,4 +95,16 @@ node_modules/
 dist/
 build/
 
+# Python
+__pycache__/
+*.py[cod]
+
+# SQLite
+*.db
+
+# React/Node
+node_modules/
+dist/
+build/
+
 backend/.venv/*

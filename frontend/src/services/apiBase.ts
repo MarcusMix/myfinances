@@ -12,10 +12,8 @@ export const authRoutes = {
   logout: "/auth/logout",
 };
 
-// Configurando o interceptor para adicionar o token em todas as requisições
 axios.interceptors.request.use(
   async (config) => {
-    // Não adiciona o token nas rotas de autenticação
     if (config.url?.includes("/auth/login")) {
       return config;
     }

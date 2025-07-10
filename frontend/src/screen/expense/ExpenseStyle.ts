@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,38 +7,45 @@ export const styles = StyleSheet.create({
   },
   subContainer: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    gap: 16,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    gap: 12,
   },
   subContainerHistorico: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     gap: 16,
     marginTop: 40,
     marginBottom: 40,
   },
   rowIconeDescricao: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
+    marginBottom: 0,
   },
   colIcone: {
     width: 46,
   },
   colDescricao: {
     flex: 1,
-    gap: 16,
+    gap: 0,
   },
   botoesCadastrar: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
-    flexWrap: 'nowrap',
+    flexWrap: "nowrap",
   },
   botoesCadastrarUnidade: {
     flex: 1,
   },
   erro: {
-    color: 'red',
-  }
+    color: "red",
+  },
+  chartContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 20,
+  },
 });

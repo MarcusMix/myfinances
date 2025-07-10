@@ -1,33 +1,86 @@
-import {StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   descricao: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black'
+    fontWeight: "bold",
+    color: "#333",
   },
   valor: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black'
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#2E7D32",
+    marginBottom: 8,
+    textAlign: "right",
+  },
+  categoria: {
+    fontSize: 14,
+    color: "#666",
+    marginRight: 8,
   },
   container: {
     flex: 1,
-    width: '100%',
-    backgroundColor: 'white',
-    borderRadius: 8,
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 12,
     padding: 16,
+    marginVertical: 8,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   columnDescricaoValor: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     gap: 2,
     padding: 8,
   },
+  detailsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    marginTop: 4,
+  },
   rowConteudo: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    gap: 8,
-  }
+    flex: 1.5,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap: 12,
+  },
+  categoryIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#E3F2FD",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  rightContainer: {
+    flex: 0.8,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  actionButtons: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    gap: 12,
+    marginTop: 4,
+  },
+  iconButton: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: "#F5F5F5",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
