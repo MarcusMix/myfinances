@@ -429,7 +429,9 @@ export default function Expense() {
         )}
 
         {despesas.length === 0 ? (
-          <Title title={"Nenhuma despesa cadastrada"} />
+          <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
+            <Title title={"Nenhuma despesa cadastrada"} />
+          </View>
         ) : (
           despesas.map((despesa, index) => (
             <DespesaCard
